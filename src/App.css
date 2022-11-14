@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+}
+* {
+  font-family: "Lato", sans-serif;
+}
+.child {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  display: grid;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.outerDiv {
+  border: 1px solid silver;
+  box-shadow: 0px 15px 10px -8px #111;
+  margin-top: 1rem;
+  margin-left: 26rem;
+  margin-right: 26rem;
+  border-radius: 11px;
+  background: #acdbcc;
+}
+.commitLink {
+  margin-bottom: 2rem;
+  margin-left: -13rem;
+}
+.initialCommitMessage {
+  margin-left: -8.7rem;
+  color: darkmagenta;
+  display: contents;
+}
+.userName {
+  color: crimson;
+  font-weight: 500;
+  font-style: italic;
+}
+.gitImage {
+  border-radius: 1rem;
+  margin-right: 5rem;
+  float: right;
+  cursor: pointer;
+}
+.error {
+  color: red;
+}
+.mainHeading {
+  color: #ff6b00;
+}
