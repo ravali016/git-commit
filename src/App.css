@@ -82,3 +82,6 @@
 .mainHeading {
   color: #ff6b00;
 }
+.threeDots {
+  display: inline !important;
+}

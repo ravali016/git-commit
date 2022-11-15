@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import { Octokit } from "octokit";
 import "./App.css";
+import { ThreeDots } from "react-loader-spinner";
 
 function App() {
   const [personalAccessToken, setPersonalAccessToken] = useState("");
   const [commitDetils, setCommitDetails] = useState([]);
   const [commitError, setCommitError] = useState(false);
   const [commitShow, setCommitShow] = useState(false);
+  const [timer, setTimer] = useState(30);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("personalToken")) {
       setCommitShow(true);
@@ -17,6 +20,27 @@ function App() {
 
     return () => {};
   }, []);
+  const timerFunc = () => {
+    const counter =
+      timer > 0 &&
+      setInterval(() => {
+        setTimer(timer - 1);
+      }, 1000);
+    return counter;
+  };
+  useEffect(() => {
+    const counterFunc = timerFunc();
+    if (counterFunc === false) {
+      setTimer(30);
+      setLoader(true);
+      saveToken();
+
+      timerFunc();
+    }
+    console.log("counterFunc", counterFunc);
+    return () => clearInterval(counterFunc);
+  }, [timer]);
+
   const dateFormat = (dateString) => {
     const options = {
       year: "numeric",
@@ -68,6 +92,9 @@ function App() {
 
         setCommitDetails(commitData);
         setCommitError(false);
+        setTimeout(() => {
+          setLoader(false);
+        }, 80);
       } else {
         console.log("test", response);
         setCommitError(true);
@@ -87,6 +114,10 @@ function App() {
     setPersonalAccessToken(e.target.value);
   };
   const saveToken = async () => {
+    console.log("refresh is calling ------->");
+    setTimeout(() => {
+      setLoader(true);
+    }, 80);
     if (personalAccessToken) {
       getCommitsFromApi(personalAccessToken);
     }
@@ -95,6 +126,26 @@ function App() {
   return (
     <div className="App">
       <h1 className="mainHeading">Git Commit History Tracking</h1>
+      {commitShow && commitDetils.length > 0 && (
+        <button onClick={saveToken}>Refresh </button>
+      )}
+      {loader && (
+        <ThreeDots
+          height="80"
+          width="80"
+          radius="9"
+          color="#4fa94d"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{ display: "inherit" }}
+          wrapperClassName=""
+          visible={true}
+        />
+      )}
+      {commitShow && commitDetils.length > 0 && (
+        <p>
+          Refreshing in <span style={{ color: "red" }}>{timer}</span> seconds
+        </p>
+      )}
       {!commitShow && (
         <div className="child">
           <label>Please enter Personal access token</label>
